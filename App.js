@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useFonts } from "expo-font";
 
-export default function App() {
+import { Amplify } from "aws-amplify";
+import awsconfig from "./src/aws-exports";
+
+import Navigation from "./src/navigation";
+
+Amplify.configure(awsconfig);
+
+const App = () => {
+  const [fontsLoaded] = useFonts({
+    "Space Grotesk": require("./assets/fonts/SpaceGrotesk-VariableFont_wght.ttf"),
+  });
+
+  // Auth.signOut();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.root}>
+      <Navigation />
+    </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#F9FBFC",
   },
 });
+
+export default App;
