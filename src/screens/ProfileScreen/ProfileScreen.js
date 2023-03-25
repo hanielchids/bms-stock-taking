@@ -16,6 +16,9 @@ const ProfileScreen = () => {
   const Settings = () => {
     navigation.navigate("Settings");
   };
+  const Help = () => {
+    navigation.navigate("Help");
+  };
 
   return (
     <View>
@@ -115,7 +118,7 @@ const ProfileScreen = () => {
           type="PROFILE"
         />
         <CustomButton text="Settings" onPress={Settings} type="PROFILE" />
-        <CustomButton text="Help and Support" onPress={""} type="PROFILE" />
+        <CustomButton text="Help and Support" onPress={Help} type="PROFILE" />
         <CustomButton text="Sign Out" onPress={""} type="SIGN_OUT" />
       </View>
     </View>
