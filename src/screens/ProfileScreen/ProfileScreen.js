@@ -2,12 +2,16 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
+import CustomButton from "../../components/CustomButton";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const Home = () => {
     navigation.navigate("Home");
+  };
+  const EditProfile = () => {
+    navigation.navigate("EditProfile");
   };
 
   return (
@@ -53,36 +57,63 @@ const ProfileScreen = () => {
 
       <View
         style={{
+          marginTop: -50,
           paddingBottom: 20,
           paddingHorizontal: 20,
           height: "40%",
           display: "flex",
           flexDirection: "column",
+          marginBottom: "20%",
         }}
       >
         <View
           style={{
-            height: 100,
-            width: 100,
-            borderRadius: "50%",
+            height: 150,
+            width: 150,
+            borderRadius: 150 / 2,
             backgroundColor: "gray",
+            marginBottom: 20,
           }}
         />
-        <Text>Fullname</Text>
-        <Text>Job title</Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 25,
+            textTransform: "uppercase",
+          }}
+        >
+          Fullname
+        </Text>
+        <Text
+          style={{
+            textTransform: "uppercase",
+          }}
+        >
+          Job title
+        </Text>
 
-        <View style={{ marginTop: "2%", fontWeight: "bold" }}>
-          <Text style={{ fontWeight: "bold" }}>Phone Number: </Text>
-          <Text style={{ fontWeight: "bold" }}>Email: </Text>
-          <Text style={{ fontWeight: "bold" }}>Company Name: </Text>
+        <View style={{ marginTop: "8%", fontWeight: "bold" }}>
+          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
+            Phone Number:{" "}
+          </Text>
+          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
+            Email:{" "}
+          </Text>
+          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
+            Company Name:{" "}
+          </Text>
         </View>
       </View>
 
       <View style={{ height: "40%", padding: 20 }}>
-        <Text>Edit Profile</Text>
-        <Text>Settings</Text>
-        <Text>Help and Support</Text>
-        <Text style={{ color: "red" }}>Sign Out</Text>
+        <CustomButton
+          text="Edit Profile"
+          onPress={EditProfile}
+          type="PROFILE"
+        />
+        <CustomButton text="Settings" onPress={""} type="PROFILE" />
+        <CustomButton text="Help and Support" onPress={""} type="PROFILE" />
+        <CustomButton text="Sign Out" onPress={""} type="SIGN_OUT" />
       </View>
     </View>
   );
