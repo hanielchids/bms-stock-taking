@@ -13,24 +13,28 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
+import { useForm, Controller } from "react-hook-form";
 import { Alert } from "react-native";
 
 const SignInScreen = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
 
-  const onSignInPressed = async () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSignInPressed = async (data) => {
     if (loading) {
       return;
     }
 
     setLoading(true);
     try {
-      const response = await Auth.signIn(username, password);
+      const response = await Auth.signIn(data.username, data.password);
 
       console.log(response);
     } catch (e) {
@@ -75,15 +79,23 @@ const SignInScreen = () => {
       </Text>
       <View style={styles.root}>
         <CustomInput
+          name="username"
           placeholder="Work Email"
-          value={username}
-          setValue={setUsername}
+          control={control}
+          rules={{ required: "Email is required" }}
         />
         <CustomInput
+          name="password"
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
           secureTextEntry
+          control={control}
+          rules={{
+            required: "Password is required",
+            minLength: {
+              value: 3,
+              message: "Password should be minimum 3 characters long",
+            },
+          }}
         />
 
         <CustomButton
@@ -141,7 +153,7 @@ const SignInScreen = () => {
         <CustomButton
           style={{ marginTop: "3%" }}
           text={loading ? "Loading..." : "Continue"}
-          onPress={onSignInPressed}
+          onPress={handleSubmit(onSignInPressed)}
         />
       </View>
     </ScrollView>

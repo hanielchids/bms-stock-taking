@@ -1,30 +1,45 @@
 import React, { useState } from "react";
+import Logo from "../../../assets/Logo.png";
 import {
   View,
+  Image,
   Text,
   StyleSheet,
-  useWindowDimensions,
   ScrollView,
-  Image,
+  useWindowDimensions,
+  Alert,
+  TouchableOpacity,
 } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import SocialSignInButtons from "../../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/core";
-import Logo from "../../../assets/Logo.png";
+import { useForm } from "react-hook-form";
+import { Auth } from "aws-amplify";
+
+const EMAIL_REGEX =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const SignUpScreen = () => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
-
+  const { control, handleSubmit, watch } = useForm();
+  const pwd = watch("password");
   const navigation = useNavigation();
+
   const { height } = useWindowDimensions();
 
-  const onRegisterPressed = () => {
-    navigation.navigate("ConfirmEmail");
+  const onRegisterPressed = async (data) => {
+    const { username, password, email, name } = data;
+    try {
+      await Auth.signUp({
+        username,
+        password,
+        attributes: { email, name, preferred_username: username },
+      });
+
+      navigation.navigate("ConfirmEmail", { username });
+    } catch (e) {
+      Alert.alert("Oops", e.message);
+    }
   };
 
   const onSignInPress = () => {
@@ -62,31 +77,107 @@ const SignUpScreen = () => {
         Sign Up
       </Text>
       <View style={styles.root}>
-        <CustomInput placeholder="Full Name" value={name} setValue={setName} />
         <CustomInput
+          name="name"
+          control={control}
+          placeholder="Full Name"
+          rules={{
+            required: "Name is required",
+            minLength: {
+              value: 3,
+              message: "Name should be at least 3 characters long",
+            },
+            maxLength: {
+              value: 24,
+              message: "Name should be max 24 characters long",
+            },
+          }}
+        />
+        <CustomInput
+          name="username"
+          control={control}
+          placeholder="Username"
+          rules={{
+            required: "Username is required",
+            minLength: {
+              value: 3,
+              message: "Username should be at least 3 characters long",
+            },
+            maxLength: {
+              value: 24,
+              message: "Username should be max 24 characters long",
+            },
+          }}
+          //   value={username}
+          //   setValue={setUsername}
+        />
+        <CustomInput
+          name="email"
+          control={control}
           placeholder="Email"
-          value={username}
-          setValue={setUsername}
+          rules={{
+            required: "Email is required",
+            pattern: { value: EMAIL_REGEX, message: "Email is invalid" },
+          }}
+          //   value={email}
+          //   setValue={setEmail}
         />
-        <CustomInput placeholder="Email" value={email} setValue={setEmail} />
         <CustomInput
+          name="password"
+          control={control}
           placeholder="Password"
-          value={password}
-          setValue={setPassword}
           secureTextEntry
+          rules={{
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password should be at least 8 characters long",
+            },
+          }}
+          //   value={password}
+          //   setValue={setPassword}
         />
         <CustomInput
-          placeholder="Confirm Password"
-          value={passwordRepeat}
-          setValue={setPasswordRepeat}
+          name="password-repeat"
+          control={control}
+          placeholder="Repeat Password"
           secureTextEntry
+          rules={{
+            validate: (value) => value === pwd || "Password do not match",
+          }}
+          //   value={passwordRepeat}
+          //   setValue={setPasswordRepeat}
         />
 
-        <CustomButton
-          text="Have an account? Sign in"
-          onPress={onSignInPress}
-          type="TERTIARY"
-        />
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignContent: "center",
+            marginBottom: "10%",
+          }}
+        >
+          <Text
+            style={{
+              color: "#0D0D0D",
+              fontWeight: 600,
+            }}
+          >
+            Already have an account?
+          </Text>
+          <TouchableOpacity onPress={onSignInPress}>
+            <Text
+              style={{
+                color: "#008BF0",
+                fontWeight: 600,
+              }}
+            >
+              {" "}
+              Login Here
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         <Text style={styles.text}>
           StockHive uses{" "}
@@ -100,7 +191,10 @@ const SignUpScreen = () => {
           and{" "}
         </Text>
 
-        <CustomButton text="Register" onPress={onRegisterPressed} />
+        <CustomButton
+          text="Register"
+          onPress={handleSubmit(onRegisterPressed)}
+        />
       </View>
     </ScrollView>
   );
