@@ -96,7 +96,7 @@ const SignUpScreen = () => {
         <CustomInput
           name="username"
           control={control}
-          placeholder="Username"
+          placeholder="Email"
           rules={{
             required: "Username is required",
             minLength: {
@@ -114,7 +114,7 @@ const SignUpScreen = () => {
         <CustomInput
           name="email"
           control={control}
-          placeholder="Email"
+          placeholder="Confirm Email"
           rules={{
             required: "Email is required",
             pattern: { value: EMAIL_REGEX, message: "Email is invalid" },
