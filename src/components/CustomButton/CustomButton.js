@@ -52,8 +52,18 @@ const styles = StyleSheet.create({
 
   container_TERTIARY: {},
 
+  container_PROFILE: {
+    paddingLeft: 0,
+    alignItems: "flex-start",
+    paddingBottom: 0,
+  },
+
   container_NOBG: {
     marginTop: -10,
+  },
+  container_SIGN_OUT: {
+    paddingLeft: 0,
+    alignItems: "flex-start",
   },
 
   text: {
@@ -71,6 +81,16 @@ const styles = StyleSheet.create({
   text_NOBG: {
     color: "#008BF0",
     fontWeight: 600,
+  },
+  text_PROFILE: {
+    color: "#0D0D0D",
+    fontSize: 20,
+    fontWeight: 500,
+  },
+  text_SIGN_OUT: {
+    color: "red",
+    fontSize: 20,
+    fontWeight: 500,
   },
 });
 
