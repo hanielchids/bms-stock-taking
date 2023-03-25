@@ -12,6 +12,7 @@ import NewPasswordScreen from "../screens/NewPasswordScreen";
 // Auth screens
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 
 import { Auth, Hub } from "aws-amplify";
 
@@ -61,6 +62,7 @@ const Navigation = () => {
           <>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           </>
         ) : (
           <>
