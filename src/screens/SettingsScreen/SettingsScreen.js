@@ -4,20 +4,11 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
 
-const ProfileScreen = () => {
+const SettingsScreen = () => {
   const navigation = useNavigation();
 
   const Home = () => {
     navigation.navigate("Home");
-  };
-  const EditProfile = () => {
-    navigation.navigate("EditProfile");
-  };
-  const Settings = () => {
-    navigation.navigate("Settings");
-  };
-  const Help = () => {
-    navigation.navigate("Help");
   };
 
   return (
@@ -49,7 +40,7 @@ const ProfileScreen = () => {
                 marginLeft: 20,
               }}
             >
-              Profile
+              Settings
             </Text>
           </View>
 
@@ -112,17 +103,13 @@ const ProfileScreen = () => {
       </View>
 
       <View style={{ height: "40%", padding: 20 }}>
-        <CustomButton
-          text="Edit Profile"
-          onPress={EditProfile}
-          type="PROFILE"
-        />
-        <CustomButton text="Settings" onPress={Settings} type="PROFILE" />
-        <CustomButton text="Help and Support" onPress={Help} type="PROFILE" />
+        <CustomButton text="Edit Profile" onPress={""} type="PROFILE" />
+        <CustomButton text="Settings" onPress={""} type="PROFILE" />
+        <CustomButton text="Help and Support" onPress={""} type="PROFILE" />
         <CustomButton text="Sign Out" onPress={""} type="SIGN_OUT" />
       </View>
     </View>
   );
 };
 
-export default ProfileScreen;
+export default SettingsScreen;
