@@ -17,8 +17,8 @@ const EditProfileScreen = () => {
   const { control, handleSubmit, watch } = useForm();
   const pwd = watch("password");
 
-  const Home = () => {
-    navigation.navigate("Home");
+  const Profile = () => {
+    navigation.navigate("Profile");
   };
   const EditProfile = () => {
     navigation.navigate("EditProfile");
@@ -42,7 +42,7 @@ const EditProfileScreen = () => {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity onPress={Home}>
+            <TouchableOpacity onPress={Profile}>
               <Icon name="arrow-left-circle" size={40} color="#000000" />
             </TouchableOpacity>
             <Text
@@ -67,7 +67,7 @@ const EditProfileScreen = () => {
 
       <View
         style={{
-          marginTop: -50,
+          marginTop: -10,
           paddingBottom: 20,
           paddingHorizontal: 20,
           height: "40%",
@@ -149,7 +149,7 @@ const EditProfileScreen = () => {
         <CustomInput
           name="password-repeat"
           control={control}
-          placeholder="Repeat Password"
+          placeholder="Confirm Password"
           secureTextEntry
           rules={{
             validate: (value) => value === pwd || "Password do not match",
@@ -157,9 +157,28 @@ const EditProfileScreen = () => {
           //   value={passwordRepeat}
           //   setValue={setPasswordRepeat}
         />
-      </View>
 
-      <View style={{ height: "40%", padding: 20 }}></View>
+        <View
+          style={{
+            marginTop: 80,
+            display: "flex",
+
+            flexDirection: "row",
+            padding: 20,
+          }}
+        >
+          <CustomButton
+            text="Update"
+            onPress={EditProfile}
+            type="PROFILE_EDIT"
+          />
+          <CustomButton
+            text="Cancel"
+            onPress={EditProfile}
+            type="PROFILE_EDIT_CANCEL"
+          />
+        </View>
+      </View>
     </View>
   );
 };

@@ -34,7 +34,7 @@ const HelpScreen = () => {
             </TouchableOpacity>
             <Text
               style={{
-                fontSize: 30,
+                fontSize: 28,
                 fontFamily: "Space Grotesk",
                 fontWeight: 700,
                 marginLeft: 20,
@@ -54,7 +54,7 @@ const HelpScreen = () => {
 
       <View
         style={{
-          marginTop: -50,
+          marginTop: 20,
           paddingBottom: 20,
           paddingHorizontal: 20,
           height: "40%",
@@ -63,50 +63,26 @@ const HelpScreen = () => {
           marginBottom: "20%",
         }}
       >
-        <View
+        <Icon
+          name="support"
           style={{
-            height: 150,
-            width: 150,
-            borderRadius: 150 / 2,
-            backgroundColor: "gray",
             marginBottom: 20,
+            marginLeft: 20,
           }}
+          size={100}
+          color="#000000"
         />
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 25,
-            textTransform: "uppercase",
-          }}
-        >
-          Fullname
-        </Text>
-        <Text
-          style={{
-            textTransform: "uppercase",
-          }}
-        >
-          Job title
-        </Text>
 
-        <View style={{ marginTop: "8%", fontWeight: "bold" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Phone Number:{" "}
-          </Text>
-          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Email:{" "}
-          </Text>
-          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Company Name:{" "}
-          </Text>
+        <View style={{ padding: 20 }}>
+          <CustomButton
+            text="Frequently asked Questions"
+            onPress={""}
+            type="SETTINGS"
+          />
+          <CustomButton text="Technical Support" onPress={""} type="SETTINGS" />
+          <CustomButton text="Feedback" onPress={""} type="SETTINGS" />
+          <CustomButton text="Contact" onPress={""} type="SETTINGS" />
         </View>
-      </View>
-
-      <View style={{ height: "40%", padding: 20 }}>
-        <CustomButton text="Edit Profile" onPress={""} type="PROFILE" />
-        <CustomButton text="Settings" onPress={""} type="PROFILE" />
-        <CustomButton text="Help and Support" onPress={""} type="PROFILE" />
-        <CustomButton text="Sign Out" onPress={""} type="SIGN_OUT" />
       </View>
     </View>
   );

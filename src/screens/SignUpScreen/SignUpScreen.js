@@ -12,7 +12,6 @@ import {
 } from "react-native";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import SocialSignInButtons from "../../components/SocialSignInButtons";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
@@ -104,7 +103,7 @@ const SignUpScreen = () => {
               message: "Username should be at least 3 characters long",
             },
             maxLength: {
-              value: 24,
+              value: 40,
               message: "Username should be max 24 characters long",
             },
           }}
