@@ -9,10 +9,20 @@
       "UnauthRoleName": "amplify-bmsstocktaking-staging-92222-unauthRole",
       "StackName": "amplify-bmsstocktaking-staging-92222",
       "StackId": "arn:aws:cloudformation:eu-west-1:547873920012:stack/amplify-bmsstocktaking-staging-92222/61f60ff0-ca25-11ed-82fb-0a76199b8d0f",
-      "AmplifyAppId": "d2yw29a36u5ayn"
+      "AmplifyAppId": "d2yw29a36u5ayn",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-bmsstocktaking-staging-92222-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
+        "bmsstocktaking": {}
+      },
+      "function": {
+        "bmsstocktakingPostConfirmation": {
+          "deploymentBucketName": "amplify-bmsstocktaking-staging-92222-deployment",
+          "s3Key": "amplify-builds/bmsstocktakingPostConfirmation-43766734747435727333-build.zip"
+        }
+      },
+      "api": {
         "bmsstocktaking": {}
       }
     }

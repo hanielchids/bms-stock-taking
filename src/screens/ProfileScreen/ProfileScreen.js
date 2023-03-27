@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
@@ -7,6 +7,38 @@ import { Auth } from "aws-amplify";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+
+  const [user, setUser] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const user = await Auth.currentSession();
+        setUser(user.accessToken.payload.username);
+        setEmail(user.idToken.payload.email);
+        setName(user.idToken.payload.name);
+
+        console.log("user stuff is: ", user.accessToken.payload.username);
+        console.log("user name  is: ", user.idToken.payload.name);
+        console.log("user email is: ", user.idToken.payload.email);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
+  async function deleteUser() {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result);
+    } catch (error) {
+      console.log("Error deleting user", error);
+    }
+  }
 
   const Home = () => {
     navigation.navigate("Home");
@@ -89,7 +121,7 @@ const ProfileScreen = () => {
             textTransform: "uppercase",
           }}
         >
-          Fullname
+          {name}
         </Text>
         <Text
           style={{
@@ -104,7 +136,7 @@ const ProfileScreen = () => {
             Phone Number:{" "}
           </Text>
           <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Email:{" "}
+            Email: {email}
           </Text>
           <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
             Company Name:{" "}
