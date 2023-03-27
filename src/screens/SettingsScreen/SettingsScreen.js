@@ -7,8 +7,8 @@ import CustomButton from "../../components/CustomButton";
 const SettingsScreen = () => {
   const navigation = useNavigation();
 
-  const Home = () => {
-    navigation.navigate("Home");
+  const Profile = () => {
+    navigation.navigate("Profile");
   };
 
   return (
@@ -29,7 +29,7 @@ const SettingsScreen = () => {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity onPress={Home}>
+            <TouchableOpacity onPress={Profile}>
               <Icon name="arrow-left-circle" size={40} color="#000000" />
             </TouchableOpacity>
             <Text
@@ -54,7 +54,7 @@ const SettingsScreen = () => {
 
       <View
         style={{
-          marginTop: -50,
+          marginTop: 20,
           paddingBottom: 20,
           paddingHorizontal: 20,
           height: "40%",
@@ -63,50 +63,25 @@ const SettingsScreen = () => {
           marginBottom: "20%",
         }}
       >
-        <View
+        <Icon
+          name="settings"
           style={{
-            height: 150,
-            width: 150,
-            borderRadius: 150 / 2,
-            backgroundColor: "gray",
             marginBottom: 20,
+            marginLeft: 20,
           }}
+          size={100}
+          color="#000000"
         />
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 25,
-            textTransform: "uppercase",
-          }}
-        >
-          Fullname
-        </Text>
-        <Text
-          style={{
-            textTransform: "uppercase",
-          }}
-        >
-          Job title
-        </Text>
 
-        <View style={{ marginTop: "8%", fontWeight: "bold" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Phone Number:{" "}
-          </Text>
-          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Email:{" "}
-          </Text>
-          <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Company Name:{" "}
-          </Text>
+        <View style={{ padding: 20 }}>
+          <CustomButton
+            text="Profile Preferences"
+            onPress={""}
+            type="SETTINGS"
+          />
+          <CustomButton text="App Settings" onPress={""} type="SETTINGS" />
+          <CustomButton text="Export Options" onPress={""} type="SETTINGS" />
         </View>
-      </View>
-
-      <View style={{ height: "40%", padding: 20 }}>
-        <CustomButton text="Edit Profile" onPress={""} type="PROFILE" />
-        <CustomButton text="Settings" onPress={""} type="PROFILE" />
-        <CustomButton text="Help and Support" onPress={""} type="PROFILE" />
-        <CustomButton text="Sign Out" onPress={""} type="SIGN_OUT" />
       </View>
     </View>
   );
