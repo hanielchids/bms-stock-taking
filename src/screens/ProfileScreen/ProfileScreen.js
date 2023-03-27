@@ -3,6 +3,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
+import { Auth } from "aws-amplify";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -119,7 +120,13 @@ const ProfileScreen = () => {
         />
         <CustomButton text="Settings" onPress={Settings} type="PROFILE" />
         <CustomButton text="Help and Support" onPress={Help} type="PROFILE" />
-        <CustomButton text="Sign Out" onPress={""} type="SIGN_OUT" />
+        <CustomButton
+          text="Sign Out"
+          onPress={() => {
+            Auth.signOut();
+          }}
+          type="SIGN_OUT"
+        />
       </View>
     </View>
   );
