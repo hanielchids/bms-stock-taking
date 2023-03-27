@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "bmsstocktaking",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbmsstocktaking",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
