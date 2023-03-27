@@ -40,7 +40,7 @@ const HomeScreen = () => {
       </View>
 
       <View style={{ height: "40%" }}>
-        <Text>haha</Text>
+        <Text>Item Results</Text>
       </View>
     </View>
   );
