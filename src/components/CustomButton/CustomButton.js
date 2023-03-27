@@ -57,6 +57,11 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingBottom: 0,
   },
+  container_SETTINGS: {
+    paddingLeft: 0,
+    alignItems: "flex-start",
+    paddingBottom: 0,
+  },
 
   container_NOBG: {
     marginTop: -10,
@@ -64,6 +69,16 @@ const styles = StyleSheet.create({
   container_SIGN_OUT: {
     paddingLeft: 0,
     alignItems: "flex-start",
+  },
+  container_PROFILE_EDIT: {
+    width: "60%",
+    backgroundColor: "black",
+    marginRight: 20,
+    marginLeft: -20,
+  },
+  container_PROFILE_EDIT_CANCEL: {
+    width: "45%",
+    backgroundColor: "red",
   },
 
   text: {
@@ -85,6 +100,11 @@ const styles = StyleSheet.create({
   text_PROFILE: {
     color: "#0D0D0D",
     fontSize: 20,
+    fontWeight: 500,
+  },
+  text_SETTINGS: {
+    color: "#0D0D0D",
+    fontSize: 25,
     fontWeight: 500,
   },
   text_SIGN_OUT: {
