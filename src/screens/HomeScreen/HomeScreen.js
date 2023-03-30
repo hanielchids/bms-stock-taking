@@ -24,22 +24,36 @@ const DATA = [
     location: "CF-30",
   },
   {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    id: "4a0f-3da1-471f-bd96-145571e29d72",
     name: "Third Item",
     code: "RS0045",
     quantity: 250,
     location: "CF-30",
   },
   {
-    id: "58694a0f-3da1-",
+    id: "a0f-3da1-",
     name: "Fourth Item",
     code: "RS0045",
     quantity: 250,
     location: "CF-30",
   },
   {
-    id: "58694a0f145571e29d72",
+    id: "a0f145571e29d72",
     name: "Fifth Item",
+    code: "RS0045",
+    quantity: 250,
+    location: "CF-30",
+  },
+  {
+    id: "145571e29d72",
+    name: "Sixth Item",
+    code: "RS0045",
+    quantity: 250,
+    location: "CF-30",
+  },
+  {
+    id: "94a0f14",
+    name: "Seventh Item",
     code: "RS0045",
     quantity: 250,
     location: "CF-30",
@@ -71,6 +85,10 @@ const HomeScreen = () => {
 
   const onIcon = () => {
     navigation.navigate("Profile");
+  };
+
+  const onAddItem = () => {
+    navigation.navigate("AddItem");
   };
 
   const { control, handleSubmit, watch } = useForm();
@@ -217,7 +235,13 @@ const HomeScreen = () => {
         <FlatList
           data={DATA}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={""}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Item", {
+                  item,
+                })
+              }
+            >
               <View
                 style={{
                   display: "flex",
@@ -268,9 +292,7 @@ const HomeScreen = () => {
             backgroundColor: "black",
             borderRadius: 100,
           }}
-          onPress={() => {
-            alert("Button is pressed");
-          }}
+          onPress={() => navigation.navigate("AddItem")}
         >
           <Icon name="plus" color="white" size={30} />
         </TouchableOpacity>
