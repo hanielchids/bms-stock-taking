@@ -7,18 +7,21 @@ import SectionCustomInput from "../../components/SectionCustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+
+import { createItem, updateItem } from "../../graphql/mutations";
+import { TextInput } from "react-native";
 
 const AddItemScreen = () => {
   const navigation = useNavigation();
 
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
         const user = await Auth.currentSession();
-        setName(user.idToken.payload.name);
+        setUserName(user.idToken.payload.name);
 
         console.log("user name  is: ", user.idToken.payload.name);
       } catch (err) {
@@ -31,11 +34,45 @@ const AddItemScreen = () => {
 
   const { control, handleSubmit, watch } = useForm();
 
+  const [items, setItems] = useState([]);
+
+  const [name, setName] = useState("");
+  const [code, setCode] = useState("");
+  const [location, setLocation] = useState("");
+  const [branchcode, setBranchCode] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [notes, setNotes] = useState("");
+
   const Profile = () => {
     navigation.navigate("Home");
   };
-  const AddItem = () => {
-    navigation.navigate("AddItem");
+  const AddItem = async () => {
+    try {
+      const input = {
+        name,
+        code,
+        location,
+        branchcode,
+        quantity,
+        notes,
+      };
+      const result = await API.graphql(graphqlOperation(createItem, { input }));
+
+      const newItem = result.data.createItem;
+      const updatedItem = [newItem, ...items];
+
+      alert("Item added!!");
+
+      setItems(updatedItem);
+      setName("");
+      setCode("");
+      setLocation("");
+      setBranchCode("");
+      setQuantity("");
+      setNotes("");
+    } catch (e) {
+      console.log("error here is :", e);
+    }
   };
 
   return (
@@ -87,7 +124,7 @@ const AddItemScreen = () => {
               {/* <Icon name="user" size={40} color="#000000" /> */}
               <Text style={{ fontSize: 30, marginLeft: -5, color: "white" }}>
                 {" "}
-                {name.charAt(0)}
+                {username.charAt(0)}
               </Text>
             </TouchableOpacity>
           </View>
@@ -120,104 +157,110 @@ const AddItemScreen = () => {
         </View>
 
         <View style={{ display: "flex", flexDirection: "row" }}>
-          <SectionCustomInput
-            name="name"
-            control={control}
-            placeholder="Item Name"
-            rules={{
-              required: "Name is required",
-              minLength: {
-                value: 3,
-                message: "Name should be at least 3 characters long",
-              },
-              maxLength: {
-                value: 24,
-                message: "Name should be max 24 characters long",
-              },
+          <TextInput
+            style={{
+              backgroundColor: "#A0A0A0",
+              width: "49%",
+              color: "#0D0D0D",
+              borderColor: "#e8e8e8",
+              borderWidth: 1,
+              borderRadius: 5,
+              paddingVertical: 20,
+              paddingHorizontal: 10,
+              marginVertical: 5,
+              marginRight: 5,
             }}
+            value={name}
+            onChangeText={(string) => setName(string)}
+            placeholder="Item Name"
           />
 
-          <SectionCustomInput
-            name="name"
-            control={control}
-            placeholder="SKU Code"
-            rules={{
-              required: "Name is required",
-              minLength: {
-                value: 3,
-                message: "Name should be at least 3 characters long",
-              },
-              maxLength: {
-                value: 24,
-                message: "Name should be max 24 characters long",
-              },
+          <TextInput
+            style={{
+              backgroundColor: "#A0A0A0",
+              width: "49%",
+              color: "#0D0D0D",
+              borderColor: "#e8e8e8",
+              borderWidth: 1,
+              borderRadius: 5,
+              paddingVertical: 20,
+              paddingHorizontal: 10,
+              marginVertical: 5,
+              marginRight: 5,
             }}
+            placeholder="SKU Code"
+            value={code}
+            onChangeText={(string) => setCode(string)}
           />
         </View>
 
-        <CustomInput
-          name="name"
-          control={control}
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
           placeholder="Bin Location"
-          rules={{
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Name should be max 24 characters long",
-            },
-          }}
+          value={location}
+          onChangeText={(string) => setLocation(string)}
         />
-        <CustomInput
-          name="name"
-          control={control}
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
           placeholder="Warehouse No. or Branch Code"
-          rules={{
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Name should be max 24 characters long",
-            },
-          }}
+          value={branchcode}
+          onChangeText={(string) => setBranchCode(string)}
         />
-        <CustomInput
-          name="name"
-          control={control}
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
           placeholder="Quantity"
-          rules={{
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Name should be max 24 characters long",
-            },
-          }}
+          value={quantity}
+          onChangeText={(number) => setQuantity(number)}
         />
-        <CustomInput
-          name="name"
-          control={control}
-          placeholder="Additional Information"
-          rules={{
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Name should be max 24 characters long",
-            },
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
           }}
+          placeholder="Additional Information"
+          value={notes}
+          onChangeText={(string) => setNotes(string)}
         />
 
         <View
