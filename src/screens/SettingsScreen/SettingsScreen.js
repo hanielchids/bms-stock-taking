@@ -1,11 +1,29 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
+import { Auth } from "aws-amplify";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
+
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const user = await Auth.currentSession();
+        setName(user.idToken.payload.name);
+
+        console.log("user name  is: ", user.idToken.payload.name);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserInfo();
+  }, []);
 
   const Profile = () => {
     navigation.navigate("Profile");
@@ -45,8 +63,23 @@ const SettingsScreen = () => {
           </View>
 
           <View>
-            <TouchableOpacity onPress={""}>
-              <Icon name="user" size={40} color="#000000" />
+            <TouchableOpacity
+              onPress={""}
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 50 / 2,
+                backgroundColor: "#008BF0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* <Icon name="user" size={40} color="#000000" /> */}
+              <Text style={{ fontSize: 30, marginLeft: -5, color: "white" }}>
+                {" "}
+                {name.charAt(0)}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
