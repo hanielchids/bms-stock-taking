@@ -58,3 +58,60 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createItem = /* GraphQL */ `
+  mutation CreateItem(
+    $input: CreateItemInput!
+    $condition: ModelItemConditionInput
+  ) {
+    createItem(input: $input, condition: $condition) {
+      name
+      code
+      location
+      branchcode
+      quantity
+      notes
+      id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateItem = /* GraphQL */ `
+  mutation UpdateItem(
+    $input: UpdateItemInput!
+    $condition: ModelItemConditionInput
+  ) {
+    updateItem(input: $input, condition: $condition) {
+      name
+      code
+      location
+      branchcode
+      quantity
+      notes
+      id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteItem = /* GraphQL */ `
+  mutation DeleteItem(
+    $input: DeleteItemInput!
+    $condition: ModelItemConditionInput
+  ) {
+    deleteItem(input: $input, condition: $condition) {
+      name
+      code
+      location
+      branchcode
+      quantity
+      notes
+      id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
