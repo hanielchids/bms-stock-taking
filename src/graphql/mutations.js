@@ -10,8 +10,13 @@ export const createUser = /* GraphQL */ `
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -24,8 +29,13 @@ export const updateUser = /* GraphQL */ `
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -38,8 +48,13 @@ export const deleteUser = /* GraphQL */ `
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;

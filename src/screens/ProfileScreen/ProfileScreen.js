@@ -11,18 +11,27 @@ const ProfileScreen = () => {
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [job, setJob] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
         const user = await Auth.currentSession();
+        setName(user.idToken.payload.name);
         setUser(user.accessToken.payload.username);
         setEmail(user.idToken.payload.email);
-        setName(user.idToken.payload.name);
+        setPhoneNumber(user.idToken.payload.phonenumber);
+        setJob(user.idToken.payload.company);
+        setTitle(user.idToken.payload.title);
 
         console.log("user stuff is: ", user.accessToken.payload.username);
         console.log("user name  is: ", user.idToken.payload.name);
         console.log("user email is: ", user.idToken.payload.email);
+        console.log("user number is: ", user.idToken.payload.phonenumber);
+        console.log("user title is: ", user.idToken.payload.title);
+        console.log("user company is: ", user.idToken.payload.company);
       } catch (err) {
         console.log(err);
       }
@@ -87,8 +96,23 @@ const ProfileScreen = () => {
           </View>
 
           <View>
-            <TouchableOpacity onPress={""}>
-              <Icon name="user" size={40} color="#000000" />
+            <TouchableOpacity
+              onPress={""}
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 50 / 2,
+                backgroundColor: "#008BF0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* <Icon name="user" size={40} color="#000000" /> */}
+              <Text style={{ fontSize: 30, marginLeft: -5, color: "white" }}>
+                {" "}
+                {name.charAt(0)}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -110,10 +134,18 @@ const ProfileScreen = () => {
             height: 150,
             width: 150,
             borderRadius: 150 / 2,
-            backgroundColor: "gray",
+            backgroundColor: "#008BF0",
             marginBottom: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <Text style={{ fontSize: 90, marginLeft: -12, color: "white" }}>
+            {" "}
+            {name.charAt(0)}
+          </Text>
+        </View>
         <Text
           style={{
             fontWeight: "bold",
@@ -128,18 +160,18 @@ const ProfileScreen = () => {
             textTransform: "uppercase",
           }}
         >
-          Job title
+          {title}
         </Text>
 
         <View style={{ marginTop: "8%", fontWeight: "bold" }}>
           <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Phone Number:{" "}
+            Phone Number: {phoneNumber}
           </Text>
           <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
             Email: {email}
           </Text>
           <Text style={{ fontWeight: "bold", fontSize: 15, marginBottom: 10 }}>
-            Company Name:{" "}
+            Company Name: {job}
           </Text>
         </View>
       </View>

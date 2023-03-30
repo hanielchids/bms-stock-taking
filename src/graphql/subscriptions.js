@@ -2,35 +2,59 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
-    onCreateUser(filter: $filter) {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
-    onUpdateUser(filter: $filter) {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
-    onDeleteUser(filter: $filter) {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;

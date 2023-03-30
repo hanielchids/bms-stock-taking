@@ -7,8 +7,13 @@ export const getUser = /* GraphQL */ `
       id
       username
       email
+      title
+      phonenumber
+      company
+      image
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -23,8 +28,13 @@ export const listUsers = /* GraphQL */ `
         id
         username
         email
+        title
+        phonenumber
+        company
+        image
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
