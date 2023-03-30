@@ -137,7 +137,7 @@ const EditProfileScreen = () => {
         <CustomInput
           name="username"
           control={control}
-          placeholder="Work Email"
+          placeholder="Phone number"
           rules={{
             required: "Username is required",
             minLength: {
@@ -149,45 +149,22 @@ const EditProfileScreen = () => {
               message: "Username should be max 24 characters long",
             },
           }}
-          //   value={username}
-          //   setValue={setUsername}
         />
         <CustomInput
           name="email"
           control={control}
-          placeholder="Confirm Email"
+          placeholder="Company name"
           rules={{
             required: "Email is required",
-            pattern: { value: EMAIL_REGEX, message: "Email is invalid" },
           }}
-          //   value={email}
-          //   setValue={setEmail}
         />
         <CustomInput
-          name="password"
+          name="email"
           control={control}
-          placeholder="Password"
-          secureTextEntry
+          placeholder="Title"
           rules={{
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password should be at least 8 characters long",
-            },
+            required: "Email is required",
           }}
-          //   value={password}
-          //   setValue={setPassword}
-        />
-        <CustomInput
-          name="password-repeat"
-          control={control}
-          placeholder="Confirm Password"
-          secureTextEntry
-          rules={{
-            validate: (value) => value === pwd || "Password do not match",
-          }}
-          //   value={passwordRepeat}
-          //   setValue={setPasswordRepeat}
         />
 
         <View
