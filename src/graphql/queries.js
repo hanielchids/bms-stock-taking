@@ -40,3 +40,42 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getItem = /* GraphQL */ `
+  query GetItem($id: ID!) {
+    getItem(id: $id) {
+      name
+      code
+      location
+      branchcode
+      quantity
+      notes
+      id
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listItems = /* GraphQL */ `
+  query ListItems(
+    $filter: ModelItemFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        name
+        code
+        location
+        branchcode
+        quantity
+        notes
+        id
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
