@@ -15,6 +15,8 @@ import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import HelpScreen from "../screens/HelpScreen";
+import AddItemScreen from "../screens/AddItemScreen";
+import ItemScreen from "../screens/ItemScreen";
 
 import { Auth, Hub } from "aws-amplify";
 
@@ -67,6 +69,8 @@ const Navigation = () => {
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Help" component={HelpScreen} />
+            <Stack.Screen name="AddItem" component={AddItemScreen} />
+            <Stack.Screen name="Item" component={ItemScreen} />
           </>
         ) : (
           <>

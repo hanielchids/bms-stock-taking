@@ -3,15 +3,13 @@ import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 // import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../../components/CustomInput";
+import SectionCustomInput from "../../components/SectionCustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
 import { Auth } from "aws-amplify";
 
-const EMAIL_REGEX =
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-const EditProfileScreen = () => {
+const AddItemScreen = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
@@ -32,13 +30,12 @@ const EditProfileScreen = () => {
   }, []);
 
   const { control, handleSubmit, watch } = useForm();
-  const pwd = watch("password");
 
   const Profile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate("Home");
   };
-  const EditProfile = () => {
-    navigation.navigate("EditProfile");
+  const AddItem = () => {
+    navigation.navigate("AddItem");
   };
 
   return (
@@ -70,7 +67,7 @@ const EditProfileScreen = () => {
                 marginLeft: 20,
               }}
             >
-              Edit Profile
+              Add Items
             </Text>
           </View>
 
@@ -110,18 +107,58 @@ const EditProfileScreen = () => {
       >
         <View
           style={{
-            height: 150,
-            width: 150,
-            borderRadius: 150 / 2,
+            height: 180,
+            width: "100%",
             backgroundColor: "gray",
             marginBottom: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <Text style={{ color: "white" }}>Upload Image</Text>
+        </View>
+
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          <SectionCustomInput
+            name="name"
+            control={control}
+            placeholder="Item Name"
+            rules={{
+              required: "Name is required",
+              minLength: {
+                value: 3,
+                message: "Name should be at least 3 characters long",
+              },
+              maxLength: {
+                value: 24,
+                message: "Name should be max 24 characters long",
+              },
+            }}
+          />
+
+          <SectionCustomInput
+            name="name"
+            control={control}
+            placeholder="SKU Code"
+            rules={{
+              required: "Name is required",
+              minLength: {
+                value: 3,
+                message: "Name should be at least 3 characters long",
+              },
+              maxLength: {
+                value: 24,
+                message: "Name should be max 24 characters long",
+              },
+            }}
+          />
+        </View>
 
         <CustomInput
           name="name"
           control={control}
-          placeholder="Full Name"
+          placeholder="Bin Location"
           rules={{
             required: "Name is required",
             minLength: {
@@ -135,61 +172,70 @@ const EditProfileScreen = () => {
           }}
         />
         <CustomInput
-          name="username"
+          name="name"
           control={control}
-          placeholder="Phone number"
+          placeholder="Warehouse No. or Branch Code"
           rules={{
-            required: "Username is required",
+            required: "Name is required",
             minLength: {
               value: 3,
-              message: "Username should be at least 3 characters long",
+              message: "Name should be at least 3 characters long",
             },
             maxLength: {
               value: 24,
-              message: "Username should be max 24 characters long",
+              message: "Name should be max 24 characters long",
             },
           }}
         />
         <CustomInput
-          name="email"
+          name="name"
           control={control}
-          placeholder="Company name"
+          placeholder="Quantity"
           rules={{
-            required: "Email is required",
+            required: "Name is required",
+            minLength: {
+              value: 3,
+              message: "Name should be at least 3 characters long",
+            },
+            maxLength: {
+              value: 24,
+              message: "Name should be max 24 characters long",
+            },
           }}
         />
         <CustomInput
-          name="email"
+          name="name"
           control={control}
-          placeholder="Title"
+          placeholder="Additional Information"
           rules={{
-            required: "Email is required",
+            required: "Name is required",
+            minLength: {
+              value: 3,
+              message: "Name should be at least 3 characters long",
+            },
+            maxLength: {
+              value: 24,
+              message: "Name should be max 24 characters long",
+            },
           }}
         />
 
         <View
           style={{
-            marginTop: 80,
+            marginTop: 40,
             display: "flex",
-
             flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+
             padding: 20,
           }}
         >
-          <CustomButton
-            text="Update"
-            onPress={EditProfile}
-            type="PROFILE_EDIT"
-          />
-          <CustomButton
-            text="Cancel"
-            onPress={EditProfile}
-            type="PROFILE_EDIT_CANCEL"
-          />
+          <CustomButton text="Save" onPress={AddItem} type="PRIMARY" />
         </View>
       </View>
     </View>
   );
 };
 
-export default EditProfileScreen;
+export default AddItemScreen;

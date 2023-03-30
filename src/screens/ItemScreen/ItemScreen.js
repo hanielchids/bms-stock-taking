@@ -1,18 +1,14 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
-// import { useNavigation } from "@react-navigation/native";
-import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import { useNavigation } from "@react-navigation/core";
-import { useForm } from "react-hook-form";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import { Auth } from "aws-amplify";
 
-const EMAIL_REGEX =
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-const EditProfileScreen = () => {
+const ItemScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const item = route.params?.item;
 
   const [name, setName] = useState("");
 
@@ -31,14 +27,11 @@ const EditProfileScreen = () => {
     getUserInfo();
   }, []);
 
-  const { control, handleSubmit, watch } = useForm();
-  const pwd = watch("password");
-
-  const Profile = () => {
-    navigation.navigate("Profile");
+  const Home = () => {
+    navigation.navigate("Home");
   };
-  const EditProfile = () => {
-    navigation.navigate("EditProfile");
+  const Item = () => {
+    navigation.navigate("Item");
   };
 
   return (
@@ -59,7 +52,7 @@ const EditProfileScreen = () => {
               flexDirection: "row",
             }}
           >
-            <TouchableOpacity onPress={Profile}>
+            <TouchableOpacity onPress={Home}>
               <Icon name="arrow-left-circle" size={40} color="#000000" />
             </TouchableOpacity>
             <Text
@@ -70,7 +63,7 @@ const EditProfileScreen = () => {
                 marginLeft: 20,
               }}
             >
-              Edit Profile
+              Item
             </Text>
           </View>
 
@@ -110,62 +103,39 @@ const EditProfileScreen = () => {
       >
         <View
           style={{
-            height: 150,
-            width: 150,
-            borderRadius: 150 / 2,
-            backgroundColor: "gray",
+            height: 180,
+            width: "100%",
+            backgroundColor: "#A0A0A0",
             marginBottom: 20,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <Text style={{ color: "white" }}> Image</Text>
+        </View>
 
-        <CustomInput
-          name="name"
-          control={control}
-          placeholder="Full Name"
-          rules={{
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Name should be max 24 characters long",
-            },
+        <View
+          style={{
+            height: 180,
+            width: "100%",
+            backgroundColor: "#A0A0A0",
+            marginBottom: 20,
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            paddingTop: 20,
+            paddingLeft: 20,
           }}
-        />
-        <CustomInput
-          name="username"
-          control={control}
-          placeholder="Phone number"
-          rules={{
-            required: "Username is required",
-            minLength: {
-              value: 3,
-              message: "Username should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Username should be max 24 characters long",
-            },
-          }}
-        />
-        <CustomInput
-          name="email"
-          control={control}
-          placeholder="Company name"
-          rules={{
-            required: "Email is required",
-          }}
-        />
-        <CustomInput
-          name="email"
-          control={control}
-          placeholder="Title"
-          rules={{
-            required: "Email is required",
-          }}
-        />
+        >
+          {/* <Text>Item Name: {id} </Text> */}
+          <Text style={{ color: "white" }}>Item Name: {item.name} </Text>
+          <Text style={{ color: "white" }}>Item Code: {item.code} </Text>
+          <Text style={{ color: "white" }}>
+            Quantity: {item.quantity} Units
+          </Text>
+          <Text style={{ color: "white" }}>Bin Location: {item.location} </Text>
+        </View>
 
         <View
           style={{
@@ -176,20 +146,12 @@ const EditProfileScreen = () => {
             padding: 20,
           }}
         >
-          <CustomButton
-            text="Update"
-            onPress={EditProfile}
-            type="PROFILE_EDIT"
-          />
-          <CustomButton
-            text="Cancel"
-            onPress={EditProfile}
-            type="PROFILE_EDIT_CANCEL"
-          />
+          <CustomButton text="Update" onPress={""} type="PROFILE_EDIT" />
+          <CustomButton text="Cancel" onPress={""} type="PROFILE_EDIT_CANCEL" />
         </View>
       </View>
     </View>
   );
 };
 
-export default EditProfileScreen;
+export default ItemScreen;
