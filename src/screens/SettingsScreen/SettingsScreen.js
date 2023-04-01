@@ -25,6 +25,19 @@ const SettingsScreen = () => {
     getUserInfo();
   }, []);
 
+  //   Graphql delete user
+  //   https://docs.amplify.aws/lib/auth/delete_user/q/platform/react-native/
+
+  async function deleteUser() {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result);
+      navigation.navigate("SignIn");
+    } catch (error) {
+      console.log("Error deleting user", error);
+    }
+  }
+
   const Profile = () => {
     navigation.navigate("Profile");
   };
@@ -114,6 +127,11 @@ const SettingsScreen = () => {
           />
           <CustomButton text="App Settings" onPress={""} type="SETTINGS" />
           <CustomButton text="Export Options" onPress={""} type="SETTINGS" />
+          <CustomButton
+            text="Delete Account"
+            onPress={deleteUser}
+            type="SIGN_OUT"
+          />
         </View>
       </View>
     </View>
