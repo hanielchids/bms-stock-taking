@@ -6,11 +6,11 @@ type User
   @model
   @auth(
     rules: [
-      { allow: owner, operations: [read], identityClaim: "username" }
-      { allow: private, operations: [read] }
+      { allow: owner, operations: [read, update], identityClaim: "username" }
+      { allow: private, operations: [read, update] }
     ]
   ) {
-  id: ID!
+  id: ID
   username: String!
   email: String
   title: String
