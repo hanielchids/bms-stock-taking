@@ -4,61 +4,10 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import CustomInput from "../../components/CustomInput";
 import { useForm } from "react-hook-form";
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import { listItems } from "../../graphql/queries";
 
 // import { Shadow } from "react-native-shadow-2";
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    name: "First Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    name: "Second Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-  {
-    id: "4a0f-3da1-471f-bd96-145571e29d72",
-    name: "Third Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-  {
-    id: "a0f-3da1-",
-    name: "Fourth Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-  {
-    id: "a0f145571e29d72",
-    name: "Fifth Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-  {
-    id: "145571e29d72",
-    name: "Sixth Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-  {
-    id: "94a0f14",
-    name: "Seventh Item",
-    code: "RS0045",
-    quantity: 250,
-    location: "CF-30",
-  },
-];
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -67,6 +16,19 @@ const HomeScreen = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
+  const [itemList, setItemList] = useState([]);
+
+  const fetchItems = async () => {
+    try {
+      const itemData = await API.graphql(graphqlOperation(listItems));
+
+      const items = itemData.data.listItems.items;
+      console.log("items showing here are", items);
+      setItemList(items);
+    } catch (e) {
+      console.log("error here is: ", e);
+    }
+  };
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -75,12 +37,14 @@ const HomeScreen = () => {
         setName(user.idToken.payload.name);
 
         console.log("user name  is: ", user.idToken.payload.name);
+        console.log("user name  is: ", user.idToken.payload.sub);
       } catch (err) {
         console.log(err);
       }
     };
 
     getUserInfo();
+    fetchItems();
   }, []);
 
   const onIcon = () => {
@@ -233,7 +197,7 @@ const HomeScreen = () => {
         {/* <Shadow style={{ height: "100%" }}> */}
 
         <FlatList
-          data={DATA}
+          data={itemList}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
@@ -269,7 +233,7 @@ const HomeScreen = () => {
                 >
                   <Text>Item Name: {item.name} </Text>
                   <Text>Item Code: {item.code} </Text>
-                  <Text>Quantity: {item.qunatity} Units</Text>
+                  <Text>Quantity: {item.quantity} Units</Text>
                   <Text>Bin Location: {item.location} </Text>
                 </View>
               </View>
