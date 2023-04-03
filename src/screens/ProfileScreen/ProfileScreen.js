@@ -40,15 +40,6 @@ const ProfileScreen = () => {
     getUserInfo();
   }, []);
 
-  async function deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-      console.log(result);
-    } catch (error) {
-      console.log("Error deleting user", error);
-    }
-  }
-
   const Home = () => {
     navigation.navigate("Home");
   };

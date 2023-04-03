@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 // import { useNavigation } from "@react-navigation/native";
@@ -6,7 +6,8 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
-import { Auth } from "aws-amplify";
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import { updateUser } from "../../graphql/mutations";
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -14,15 +15,25 @@ const EMAIL_REGEX =
 const EditProfileScreen = () => {
   const navigation = useNavigation();
 
-  const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
+  const [users, setUsers] = useState([]);
+
+  // const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
+  const [title, setTitle] = useState("");
+  const [company, setCompany] = useState("");
 
   useEffect(() => {
     const getUserInfo = async () => {
       try {
         const user = await Auth.currentSession();
-        setName(user.idToken.payload.name);
+        setUserName(user.idToken.payload.name);
+        setId(user.accessToken.payload.client_id);
 
-        console.log("user name  is: ", user.idToken.payload.name);
+        console.log("user name  is: ", user.accessToken.payload.client_id);
+        // console.log("user name  is: ", user.idToken.payload.name);
+        // console.log("user id  is: ", user.idToken.payload.sub);
       } catch (err) {
         console.log(err);
       }
@@ -39,6 +50,55 @@ const EditProfileScreen = () => {
   };
   const EditProfile = () => {
     navigation.navigate("EditProfile");
+  };
+
+  const updateUserInfo = async () => {
+    try {
+      const input = {
+        id,
+        phonenumber,
+        title,
+        company,
+      };
+      const result = await API.graphql(graphqlOperation(updateUser, { input }));
+
+      const newUser = result.data.updateUser;
+      const updatedUser = [newUser, ...users];
+
+      alert("User updated!");
+
+      setUsers(updatedUser);
+      // setName("");
+      // setId("");
+      setPhonenumber("");
+      setTitle("");
+      setCompany("");
+    } catch (e) {
+      console.log("error here is :", e);
+    }
+
+    // try {
+    //   const userDetails = {
+    //     id: id,
+    //     phonenumber: phonenumber,
+    //     title: title,
+    //     company: company,
+    //   };
+
+    //   const updatedUser = await API.graphql({
+    //     query: updateUser,
+    //     variables: { input: userDetails },
+    //   });
+
+    //   setUsers(updatedUser);
+
+    //   // setId("");
+    //   setPhonenumber("");
+    //   setTitle("");
+    //   setCompany("");
+    // } catch (e) {
+    //   console.log("error message: ", e);
+    // }
   };
 
   return (
@@ -90,7 +150,7 @@ const EditProfileScreen = () => {
               {/* <Icon name="user" size={40} color="#000000" /> */}
               <Text style={{ fontSize: 30, marginLeft: -5, color: "white" }}>
                 {" "}
-                {name.charAt(0)}
+                {username.charAt(0)}
               </Text>
             </TouchableOpacity>
           </View>
@@ -118,55 +178,93 @@ const EditProfileScreen = () => {
           }}
         />
 
-        <CustomInput
-          name="name"
-          control={control}
+        {/* <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
           placeholder="Full Name"
-          rules={{
-            required: "Name is required",
-            minLength: {
-              value: 3,
-              message: "Name should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Name should be max 24 characters long",
-            },
+          value={name}
+          onChangeText={(string) => setName(string)}
+        /> */}
+
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
           }}
-        />
-        <CustomInput
-          name="username"
-          control={control}
-          placeholder="Phone number"
-          rules={{
-            required: "Username is required",
-            minLength: {
-              value: 3,
-              message: "Username should be at least 3 characters long",
-            },
-            maxLength: {
-              value: 24,
-              message: "Username should be max 24 characters long",
-            },
-          }}
-        />
-        <CustomInput
-          name="email"
-          control={control}
-          placeholder="Company name"
-          rules={{
-            required: "Email is required",
-          }}
-        />
-        <CustomInput
-          name="email"
-          control={control}
-          placeholder="Title"
-          rules={{
-            required: "Email is required",
-          }}
+          placeholder="random string for Id"
+          value={id}
+          // onChangeText={(number) => setId(number)}
         />
 
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
+          placeholder="Phone number"
+          value={phonenumber}
+          onChangeText={(number) => setPhonenumber(number)}
+        />
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
+          placeholder="Job title"
+          value={title}
+          onChangeText={(string) => setTitle(string)}
+        />
+        <TextInput
+          style={{
+            backgroundColor: "#A0A0A0",
+            width: "100%",
+            color: "#0D0D0D",
+            borderColor: "#e8e8e8",
+            borderWidth: 1,
+            borderRadius: 5,
+            paddingVertical: 20,
+            paddingHorizontal: 10,
+            marginVertical: 5,
+            marginRight: 5,
+          }}
+          placeholder="Company"
+          value={company}
+          onChangeText={(string) => setCompany(string)}
+        />
         <View
           style={{
             marginTop: 80,
@@ -178,7 +276,7 @@ const EditProfileScreen = () => {
         >
           <CustomButton
             text="Update"
-            onPress={EditProfile}
+            onPress={updateUserInfo}
             type="PROFILE_EDIT"
           />
           <CustomButton
